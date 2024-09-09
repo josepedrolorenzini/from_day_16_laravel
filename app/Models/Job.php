@@ -16,4 +16,12 @@ class Job extends Model {
     {
         return $this->belongsTo(Employer::class);
     }
+
+    public function createJobListing(){
+        // $job = new App\Models\Job ; 
+       // App\Models\Job::factory(30)->create() ;
+
+       $this->factory(30)->create();
+
+    }
 }
