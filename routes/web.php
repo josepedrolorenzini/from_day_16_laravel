@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\ContactForm;
+use illuminate\support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Job;
 
+
 Route::get('/', function () {
-    return view('home');
+    return view('home' ,[
+        'name' => 'jose lorenzini' ,
+    ]);
 });
 
 // Index
@@ -91,3 +95,37 @@ Route::delete('/jobs/{id}', function ($id) {
 // });
 
 Route::get('/contact',[ContactForm::class , 'index']) ;
+
+Route::get("/trabajos", function () {
+
+    return view('trabajos', [
+        'trabajos' => include public_path('php/trabajo.php')
+    ]);
+
+//    return response()->json([
+//        'trabajo' => include public_path('php/jobs.php')
+//    ]);
+//
+
+});
+Route::get("/trabajos/{id}", function ($id) {
+   // dd($id) ;
+    $eworks = include public_path('php/trabajo.php') ;
+  // dd($eworks) ;
+    // Ensure $eworks is an array
+    if (!is_array($eworks)) {
+        return response()->json(['error' => 'Invalid data format'], 500);
+    }
+
+   $result = Arr::first($eworks , function ($tr) use ($id) {
+         return $tr['id'] == $id  ;
+    });
+
+    return view('trabajo', [
+        'result' => $result
+    ]);
+//
+//    return response()->json( [
+//        'result' => $result,
+//    ]);
+}) ;
