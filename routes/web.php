@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactForm;
 use illuminate\support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Models\Job;
+use App\Models\Works;
 
 
 Route::get('/', function () {
@@ -124,8 +125,25 @@ Route::get("/trabajos/{id}", function ($id) {
     return view('trabajo', [
         'result' => $result
     ]);
-//
-//    return response()->json( [
-//        'result' => $result,
-//    ]);
+
 }) ;
+
+// testing namespaces models works
+Route::get("/works" , function () {
+    $workis = Works::all();
+    return response()->json( [
+        'workis' => $workis,
+    ]);
+}) ;
+
+Route::get("/works/{id}" , function ($id) {
+//    $workis = Arr::first(Works::all(), function ($work) use ($id) {
+//        return $work['id'] == $id  ;
+//    });
+    $workis = Works::find($id);
+    return response()->json( [
+        'workis' => $workis,
+    ]);
+}) ;
+
+// testing namespaces models works
